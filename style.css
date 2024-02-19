@@ -1,0 +1,13 @@
+hr{
+    border:none;
+    border-top:2px dashed;
+}
+.vertical{
+    border-left:2px dashed black;
+    float:left;
+}
+@media screen and ( max-width: 700px ) {
+    .separate{
+        display:none;
+    }
+}
