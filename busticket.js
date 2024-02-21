@@ -23,8 +23,45 @@ let total=0;
             success.setAttribute('disabled',true);
            }
            });
+        
+        //sit buy limit and enable to offer button-->
+         const bookingSeat=document.getElementById('book-seat').innerText;
+         const valueSeat=parseInt(bookingSeat);
+        
+        //enable to offer button-->
+        if(valueSeat===3){
+            const offerButton=document.getElementById('offer-button');
+            offerButton.removeAttribute('disabled');
+         };
 
-        //show sell seat no-->
+         //not more than buy 5 ticket-->
+        if(valueSeat>4){
+            alert('buy ticket enough');
+            return;
+        };
+         
+        //booking seat-->
+        bookSeat+=1;
+        setInnerText('book-seat',bookSeat);
+        
+        //available seat-->
+        seatAvailable-=1;
+        setInnerText('seats-left',seatAvailable);
+        
+        //total price-->
+        total+=550;
+        setInnerText('total',total);
+
+        //grand total price-->
+        setInnerText('grand-total',total);
+
+        //button bg color-->
+        seat.target.style.backgroundColor='green';
+
+        //disabled seat button-->
+        seat.target.setAttribute('disabled',true);
+
+         //show sell seat no-->
         const seatNo=seat.target.innerText;
         const seatTotal=document.getElementById('ticket-no');
         const div=document.createElement('div');
@@ -39,40 +76,32 @@ let total=0;
         div.appendChild(p2);
         div.appendChild(p3);
         seatTotal.appendChild(div);
-
-        //enable to offer button-->
-         const bookingSeat=document.getElementById('book-seat').innerText;
-         const valueSeat=parseInt(bookingSeat)
-        if(valueSeat===3){
-            const offerButton=document.getElementById('offer-button');
-            offerButton.removeAttribute('disabled');
-         }
-
-         //not more than buy 5 ticket-->
-         if(valueSeat>4){
-            alert('buy ticket enough');
-            return;
-        };
-
-        //available seat-->
-        seatAvailable-=1;
-        setInnerText('seats-left',seatAvailable);
-        //booking seat-->
-        bookSeat+=1;
-        setInnerText('book-seat',bookSeat);
-        //total price-->
-        total+=550;
-        setInnerText('total',total);
-        //grand total price-->
-        setInnerText('grand-total',total);
-        //button bg color-->
-        seat.target.style.backgroundColor='green';
      })  
  }
 
 
- //apply offer-->
- document.getElementById('input').addEventListener('keyup',function(event){
+//apply offer-->
+ document.getElementById('offer-button').addEventListener('click',function(){
+const text=document.getElementById('input').value;
+     const totalPrice=document.getElementById('total');
+     const totalPriceValue=parseInt(totalPrice.innerText);
+          const grandTotal=document.getElementById('grand-total');
+          if(text==='NEW15'){         
+              grandTotal.innerText=totalPriceValue-totalPriceValue*15/100;
+            }
+        
+        else if(text==='Couple 20'){
+              grandTotal.innerText=totalPriceValue-totalPriceValue*20/100;
+            }
+            else {
+                alert("Please Enter Valid coupon code");
+            }
+        
+        })
+
+
+ // or apply offer-->
+ /*document.getElementById('input').addEventListener('keyup',function(event){
     const text=event.target.value;  
     const button=document.getElementById('offer-button');
     const totalPrice=document.getElementById('total');
@@ -88,7 +117,7 @@ let total=0;
           grandTotal.innerText=totalPriceValue-totalPriceValue*20/100;
         })
     }
-})
+})*/
 
 
 //go to final page-->
@@ -103,11 +132,11 @@ function againContinue(){
     addClass('final');
     removeClass('main');
     setInnerText('book-seat',0);
-    bookSeat=0;
+    //bookSeat=0;
     const seatTotal=document.getElementById('ticket-no');
     seatTotal.innerText='';
     setInnerText('total',0);
-    total=0;
+    total=bookSeat=0;
     setInnerText('grand-total',0);
     const offerButton=document.getElementById('offer-button');
     offerButton.setAttribute('disabled',true);
